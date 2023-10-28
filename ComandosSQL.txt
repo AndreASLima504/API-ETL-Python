@@ -124,3 +124,48 @@ CREATE TABLE funcionarios_fabrica (
     bairro                          TEXT,
     cidade                          TEXT
 );
+
+INSERT INTO funcionarios_fabrica (
+                                     Nome,
+                                     ID
+                                 )
+                                 VALUES (
+                                     'José',
+                                     1
+                                 ),
+                                 (
+                                     'Verônica',
+                                     2
+                                 ),
+                                 (
+                                     'Mateus',
+                                     3
+                                 ),
+                                 (
+                                     'Altair',
+                                     4
+                                 ),
+                                 (
+                                     'Miltao',
+                                     5
+                                 ),
+                                 (
+                                     'Zelda',
+                                     6
+                                 ),
+                                 (
+                                     'Carlos',
+                                     7
+                                 ),
+                                 (
+                                     'Fátima',
+                                     8
+                                 ),
+                                 (
+                                     'Maria',
+                                     9
+                                 ),
+                                 (
+                                     'Danieli',
+                                     10
+                                 );

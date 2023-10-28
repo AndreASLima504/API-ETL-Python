@@ -53,9 +53,10 @@ class Banco:
             self.execute(f"Insert into {self.tabela} VALUES (NULL, ?, ?);", (operacao, data_hora))
             self.persist()
             self.disconnect()
+            return "Log realizado"
         except:
             self.rollback()
-            return 'erro'
+            return 'Erro Log'
 
     def insert(self, Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade):
         self.connect()
@@ -76,20 +77,20 @@ class Banco:
         except:
             return "Erro leitura"
 
-    def search(self, id):
+    def search(self, id, ):
         self.connect()
         try:
-            self.execute(f"SELECT * FROM {self.tabela} WHERE ID = ?", (id))
+            self.execute(f"SELECT * FROM {self.tabela} WHERE ID = ?", (id, ))
             rows = self.fetchall()
             self.disconnect()
             return rows
-        except:
-            return "Erro busca"
+        except Exception as e:
+            return f"Erro busca: {str(e)}"
 
     def delete(self, id, ):
         self.connect()
         try:
-            self.execute(f"DELETE FROM {self.tabela} WHERE ID = ?", (id))
+            self.execute(f"DELETE FROM {self.tabela} WHERE ID = ?", (id, ))
             self.persist()
             self.disconnect()
             return "Sucesso delete"
