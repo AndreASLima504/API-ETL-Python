@@ -1,0 +1,126 @@
+DDL banco1:
+CREATE TABLE funcionarios (
+    ID                              INTEGER   PRIMARY KEY AUTOINCREMENT,
+    Nome                            TEXT,
+    RG                              TEXT (9),
+    CPF                             TEXT (11),
+    Data_admissao                   TEXT,
+    Data_hora_alteracao_do_registro TEXT,
+    CEP                             TEXT (8) 
+);
+
+
+Insert banco 1:
+INSERT INTO funcionarios (
+                             CEP,
+                             Data_hora_alteracao_do_registro,
+                             Data_admissao,
+                             CPF,
+                             RG,
+                             Nome,
+                             ID
+                         )
+                         VALUES (
+                             '08664650',
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '10/05/2013',
+                             50858512771,
+                             674580298,
+                             'José',
+                             1
+                         ),
+                         (
+                             '08656040',
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '03/07/2011',
+                             63309138261,
+                             352637451,
+                             'Verônica',
+                             2
+                         ),
+                         (
+                             '08780911',
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '27/02/2021',
+                             71811456066,
+                             331922241,
+                             'Mateus',
+                             3
+                         ),
+                         (
+                             '08790610',
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '15/09/2020',
+                             77619070530,
+                             '089006984',
+                             'Altair',
+                             4
+                         ),
+                         (
+                             31140320,
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '11/01/2019',
+                             11137555205,
+                             481004182,
+                             'Milton',
+                             5
+                         ),
+                         (
+                             31035480,
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '16/08/2016',
+                             59649000658,
+                             740117099,
+                             'Zelda',
+                             6
+                         ),
+                         (
+                             34009230,
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '18/02/2014',
+                             76317900144,
+                             470748216,
+                             'Carlos',
+                             7
+                         ),
+                         (
+                             22070002,
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '07/03/2019',
+                             '03465294442',
+                             618011950,
+                             'Fátima',
+                             8
+                         ),
+                         (
+                             '08675190',
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '09/06/2022',
+                             23124116204,
+                             '001014357',
+                             'Maria',
+                             9
+                         ),
+                         (
+                             '08735400',
+                             'Hora: 01:08:19 Data: 28-10-2023',
+                             '01/02/2023',
+                             13048305042,
+                             245008358,
+                             'Danieli',
+                             10
+                         );
+
+DDL banco2:
+CREATE TABLE funcionarios_fabrica (
+    ID                              INTEGER   PRIMARY KEY AUTOINCREMENT,
+    Nome                            TEXT,
+    RG                              TEXT (9),
+    CPF                             TEXT (11),
+    Data_admissao                   TEXT,
+    Data_hora_alteracao_do_registro TEXT,
+    CEP                             TEXT (8),
+    endereco                        TEXT,
+    bairro                          TEXT,
+    cidade                          TEXT
+);

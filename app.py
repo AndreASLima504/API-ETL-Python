@@ -24,17 +24,18 @@ def copy_data():
         dadosInsert = {
             "ID": i[0],
             "Nome": i[1],
-            "RG": i[2],
-            "CPF": i[3],
-            "Data_admissao": i[4],
-            "Data_alteracao_do_registro": datetime.now().strftime('Hora: %H:%M:%S  Data: %d-%m-%Y'),
-            "CEP": i[6],
-            "endereco": enderecoCompleto['logradouro'],
-            "bairro": enderecoCompleto['bairro'],
-            "cidade": enderecoCompleto['localidade']
+            # "RG": i[2],
+            # "CPF": i[3],
+            # "Data_admissao": i[4],
+            # "Data_alteracao_do_registro": datetime.now().strftime('Hora: %H:%M:%S  Data: %d-%m-%Y'),
+            # "CEP": i[6],
+            # "endereco": enderecoCompleto['logradouro'],
+            # "bairro": enderecoCompleto['bairro'],
+            # "cidade": enderecoCompleto['localidade']
         }
-        print(dadosInsert)
+        # print(dadosInsert)
         # BancoDestino.insert[dadosInsert['ID'], dadosInsert['Nome'], dadosInsert['RG'], dadosInsert['CPF'], dadosInsert['Data_admissao'], dadosInsert['Data_alteracao_do_registro'], dadosInsert['CEP'], dadosInsert['endereco'], dadosInsert['bairro'], dadosInsert['cidade']]
+        BancoDestino.insert[dadosInsert['ID']]
     return 'hello world'
 
 
