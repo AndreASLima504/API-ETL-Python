@@ -1,8 +1,5 @@
 import sqlite3 as sql
 
-bancoOrigem = "Banco1"
-BancoDestino = "Banco2"
-
 class Banco:
     def __init__(self, rotaBanco, tabela):
         self.tabela = tabela
@@ -46,9 +43,19 @@ class Banco:
     
     def initDB(self):
         self.connect()
-        # self.execute("CREATE TABLE IF NOT EXISTS Client (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT (50), surname TEXT(50), email TEXT(320), cpf CHAR(11) CHECK(length(cpf) = 11))")
+        self.execute(f"CREATE TABLE IF NOT EXISTS {self.tabela} (id INTEGER PRIMARY KEY AUTOINCREMENT, Operacao_realizada TEXT (50), Data_hora_operacao TEXT);")
         self.persist()
         self.disconnect()
+    
+    def novoLog(self, operacao, data_hora):
+        self.connect()
+        try:
+            self.execute(f"Insert into {self.tabela} VALUES (NULL, ?, ?);", (operacao, data_hora))
+            self.persist()
+            self.disconnect()
+        except:
+            self.rollback()
+            return 'erro'
 
     def insert(self, Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade):
         self.connect()
@@ -61,34 +68,45 @@ class Banco:
 
     def read(self): 
         self.connect()
-        self.execute(f"SELECT * FROM {self.tabela};")
-        rows = self.fetchall()
-        self.disconnect()
-        return rows
+        try:
+            self.execute(f"SELECT * FROM {self.tabela};")
+            rows = self.fetchall()
+            self.disconnect()
+            return rows
+        except:
+            return "Erro leitura"
 
     def search(self, id):
         self.connect()
-        self.execute(f"SELECT * FROM {self.tabela} WHERE ID = ?", (id))
-        rows = self.fetchall()
-        self.disconnect()
-        return rows
+        try:
+            self.execute(f"SELECT * FROM {self.tabela} WHERE ID = ?", (id))
+            rows = self.fetchall()
+            self.disconnect()
+            return rows
+        except:
+            return "Erro busca"
 
     def delete(self, id, ):
         self.connect()
         try:
-            self.execute(f"DELETE FROM {self.tabela} WHERE ID = ?", (id, ))
+            self.execute(f"DELETE FROM {self.tabela} WHERE ID = ?", (id))
             self.persist()
             self.disconnect()
-            return "success"
+            return "Sucesso delete"
         except:
             self.rollback()
-            return "Error"
+            return "Erro delete"
 
     def update(self, id, Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade):
         self.connect()
-        self.execute(f"UPDATE {self.tabela} SET Nome = ?, RG = ?, CPF = ?, Data_admissao = ?, Data_hora_alteracao_do_registro = ?, CEP = ?, endereco = ?, bairro = ?, cidade = ? WHERE ID = ?", (Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade, id))
-        self.persist()
-        self.disconnect()
+        try:
+            self.execute(f"UPDATE {self.tabela} SET Nome = ?, RG = ?, CPF = ?, Data_admissao = ?, Data_hora_alteracao_do_registro = ?, CEP = ?, endereco = ?, bairro = ?, cidade = ? WHERE ID = ?", (Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade, id))
+            self.persist()
+            self.disconnect()
+            return "Sucesso update"
+        except:
+            self.rollback()
+            return "Erro update"
 
 
 
