@@ -11,13 +11,14 @@ Logs = Cons.Banco("Logs.db", "Logs")
 
 app = Flask(__name__)
 
-
+# Ler todos os Logs
 @app.route('/logs', methods=['GET'])
 def mostrar_logs():
     Logs.initDBLogs()
     _logs = Logs.read()
     return _logs
 
+# Atualizar dados do BD02 com dados do BD01 através do ID, incluindo endereço através do viacep
 @app.route('/atualizar_dados', methods=['PUT'])
 def copy_data():
     dadosOrigem = get_origem()
@@ -44,13 +45,13 @@ def copy_data():
             return "Erro na atualização de dados"
     return BancoDestino.read()
 
-
+# Ler todos os dados do banco de origem (BD01)
 @app.route('/dados_origem', methods=['GET'])
 def get_origem():
     dadosOrigem = BancoOrigem.read()
     return dadosOrigem
 
-
+# Ler todos os dados do banco de destino (BD02)
 @app.route('/dados_destino', methods=['GET'])
 def get_destino():
     dadosDestino = BancoDestino.read()
@@ -84,7 +85,7 @@ def insert_destino():
     except Exception as e:
         return f"Erro: {str(e)}"
 
-### Requer json apenas com o id
+### Método para deletar linha do BD02; Requer json informando o id
 @app.route('/dados_destino', methods=['DELETE'])
 def delete_target_data():
     horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
