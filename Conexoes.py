@@ -1,4 +1,5 @@
 import sqlite3 as sql
+from datetime import datetime, timedelta
 
 class Banco:
     def __init__(self, rotaBanco, tabela):
@@ -41,13 +42,26 @@ class Banco:
         else:
             return False
     
-    def initDB(self):
+    def initDBLogs(self):
         self.connect()
         self.execute(f"CREATE TABLE IF NOT EXISTS {self.tabela} (id INTEGER PRIMARY KEY AUTOINCREMENT, Operacao_realizada TEXT (50), Data_hora_operacao TEXT);")
         self.persist()
         self.disconnect()
     
+    def deletarLogs(self):
+        logs = self.read()
+        try:
+            for log in logs:
+                if datetime.now() - datetime.strptime(log[2], '%d-%m-%Y %H:%M:%S') > timedelta(days=2):
+                    self.delete(log[0])
+            return logs
+        except Exception as e:
+            return f'Erro deleção de logs{str(e)}'
+
+    
     def novoLog(self, operacao, data_hora):
+        self.initDBLogs()
+        self.deletarLogs()
         self.connect()
         try:
             self.execute(f"Insert into {self.tabela} VALUES (NULL, ?, ?);", (operacao, data_hora))

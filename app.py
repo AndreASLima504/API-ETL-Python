@@ -11,10 +11,12 @@ Logs = Cons.Banco("Logs.db", "Logs")
 
 app = Flask(__name__)
 
-@app.route('/<id>', methods=['GET'])
-def teste(id):
-    print(type(id))
-    return BancoDestino.search(id)
+
+@app.route('/logs', methods=['GET'])
+def mostrar_logs():
+    Logs.initDBLogs()
+    _logs = Logs.read()
+    return _logs
 
 @app.route('/atualizar_dados', methods=['PUT'])
 def copy_data():
@@ -66,7 +68,7 @@ def update_target_data():
                 Logs.novoLog(f"Dados do funcionário de id: {requisicao[0]} alterados", horaAtual)
                 return BancoDestino.search(str(requisicao[0]))
             except:return "Erro de Log"
-        except:return "Erro update"
+        except Exception as e:return f"Erro update{str(e)}"
     except: return "Erro de arquivo json"
     
 ### Para cadastrar um novo funcionario, deve-se enviar um json contendo: novos dados para nome, RG, CPF, data_admissao, CEP
@@ -88,9 +90,7 @@ def delete_target_data():
     horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     try:
         requisicao = request.get_json()
-        print(type(requisicao))
         deletado = BancoDestino.search(str(requisicao[0]))
-        print(deletado)
         BancoDestino.delete(requisicao[0])
         Logs.novoLog(f"Funcionário excluído: {deletado}", horaAtual)
         return BancoDestino.read()
