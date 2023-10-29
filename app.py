@@ -37,7 +37,6 @@ def copy_data():
             "bairro": enderecoCompleto['bairro'],
             "cidade": enderecoCompleto['localidade']
         }
-        print(dadosUpdate)
         try:
             BancoDestino.update(dadosUpdate['ID'], dadosUpdate['Nome'], dadosUpdate['RG'], dadosUpdate['CPF'], dadosUpdate['Data_admissao'], dadosUpdate['Data_alteracao_do_registro'], dadosUpdate['CEP'], dadosUpdate['endereco'], dadosUpdate['bairro'], dadosUpdate['cidade'])
             Logs.novoLog('Dados do BD02 atualizados com os do BD01', horaAtual)
