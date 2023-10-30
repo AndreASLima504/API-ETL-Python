@@ -3,7 +3,9 @@ import Conexoes as Cons
 import requests
 
 
-
+# Diferentes instâncias do script conexões.
+## Alguns métodos não podem ser acessados por certas instâncias
+# Parâmetros: rota, nome da tabela
 BancoOrigem = Cons.Banco("Banco1", "funcionarios")
 BancoDestino = Cons.Banco("Banco2", "funcionarios_fabrica")
 Logs = Cons.Banco("Logs.db", "Logs")
@@ -93,5 +95,4 @@ def delete_target_data():
 
 
 if __name__ == '__main__':
-    while True:
         app.run(debug=False)
