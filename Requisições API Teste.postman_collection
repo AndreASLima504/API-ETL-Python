@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6c70e450-fcc6-474e-a665-c82a8adb3664",
+		"_postman_id": "78eb899f-da42-405e-988c-afe0444ff7cd",
 		"name": "Requisições API Python",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21614953"
@@ -34,28 +34,6 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/dados_destino",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"dados_destino"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://127.0.0.1:5000/dados_origem",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
 					"raw": "http://127.0.0.1:5000/logs",
 					"protocol": "http",
 					"host": [
@@ -67,6 +45,28 @@
 					"port": "5000",
 					"path": [
 						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/dados_origem",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/dados_origem",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"dados_origem"
 					]
 				}
 			},
@@ -163,7 +163,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    10\r\n]",
+					"raw": "[\r\n    9\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"

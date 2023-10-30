@@ -93,4 +93,5 @@ def delete_target_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    while True:
+        app.run(debug=False)
