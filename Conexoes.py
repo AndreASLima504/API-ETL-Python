@@ -59,12 +59,13 @@ class Banco:
             return f'Erro deleção de logs{str(e)}'
 
     
-    def novoLog(self, operacao, data_hora):
+    def novoLog(self, operacao, ):
         self.initDBLogs()
         self.deletarLogs()
         self.connect()
+        horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         try:
-            self.execute(f"Insert into {self.tabela} VALUES (NULL, ?, ?);", (operacao, data_hora))
+            self.execute(f"Insert into {self.tabela} VALUES (NULL, ?, ?);", (operacao, horaAtual))
             self.persist()
             self.disconnect()
             return "Log realizado"
@@ -72,10 +73,11 @@ class Banco:
             self.rollback()
             return 'Erro Log'
 
-    def insert(self, Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade):
+    def insert(self, Nome, RG, CPF, Data_admissao, CEP, endereco, bairro, cidade):
         self.connect()
+        horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         try:
-            self.execute(f"INSERT INTO {self.tabela} VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade))
+            self.execute(f"INSERT INTO {self.tabela} VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (Nome, RG, CPF, Data_admissao, horaAtual, CEP, endereco, bairro, cidade))
             self.persist()
             self.disconnect()
         except sql.IntegrityError as e:
@@ -112,10 +114,11 @@ class Banco:
             self.rollback()
             return "Erro delete"
 
-    def update(self, id, Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade):
+    def update(self, id, Nome, RG, CPF, Data_admissao, CEP, endereco, bairro, cidade):
         self.connect()
+        horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         try:
-            self.execute(f"UPDATE {self.tabela} SET Nome = ?, RG = ?, CPF = ?, Data_admissao = ?, Data_hora_alteracao_do_registro = ?, CEP = ?, endereco = ?, bairro = ?, cidade = ? WHERE ID = ?", (Nome, RG, CPF, Data_admissao, Data_hora_alteracao_do_registro, CEP, endereco, bairro, cidade, id))
+            self.execute(f"UPDATE {self.tabela} SET Nome = ?, RG = ?, CPF = ?, Data_admissao = ?, Data_hora_alteracao_do_registro = ?, CEP = ?, endereco = ?, bairro = ?, cidade = ? WHERE ID = ?", (Nome, RG, CPF, Data_admissao, horaAtual, CEP, endereco, bairro, cidade, id))
             self.persist()
             self.disconnect()
             return "Sucesso update"
