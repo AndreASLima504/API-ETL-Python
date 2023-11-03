@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "http://127.0.0.1:5000/atualizar_dados",
+			"name": "Carregar funcionários",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -29,7 +29,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/logs",
+			"name": "Ver Logs",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -51,7 +51,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/dados_origem",
+			"name": "Ver dados BD01",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -73,7 +73,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/dados_destino",
+			"name": "Ver dados BD02",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -95,7 +95,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/dados_destino",
+			"name": "Update BD02",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -126,7 +126,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/dados_destino",
+			"name": "Insert BD02",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -157,7 +157,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/dados_destino",
+			"name": "Delete BD02",
 			"request": {
 				"method": "DELETE",
 				"header": [],
