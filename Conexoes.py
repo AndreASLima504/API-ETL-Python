@@ -1,5 +1,6 @@
 import sqlite3 as sql
 from datetime import datetime, timedelta
+import uuid
 
 class Banco:
     # Método construtor do banco
@@ -39,9 +40,6 @@ class Banco:
         else:
             return False
 
-    # retorna uma lista das tuplas encontradas na consulta
-    def fetchall(self):
-        return self.cur.fetchall()
 
     # Salvar mudanças no banco
     def persist(self):
@@ -90,7 +88,8 @@ class Banco:
         self.connect()
         horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         try:
-            self.execute(f"INSERT INTO {self.tabela} VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (Nome, RG, CPF, Data_admissao, horaAtual, CEP, endereco, bairro, cidade))
+            novoId = self.gerar_id_unico()
+            self.execute(f"INSERT INTO {self.tabela} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (str(novoId), Nome, RG, CPF, Data_admissao, horaAtual, CEP, endereco, bairro, cidade))
             self.persist()
             self.disconnect()
         except sql.IntegrityError as e:
@@ -101,7 +100,7 @@ class Banco:
         self.connect()
         try:
             self.execute(f"SELECT * FROM {self.tabela};")
-            rows = self.fetchall()
+            rows = self.cur.fetchall()
             self.disconnect()
             return rows
         except:
@@ -112,7 +111,7 @@ class Banco:
         self.connect()
         try:
             self.execute(f"SELECT * FROM {self.tabela} WHERE ID = ?", (id, ))
-            rows = self.fetchall()
+            rows = self.cur.fetchall()
             self.disconnect()
             return rows
         except Exception as e:
@@ -142,7 +141,28 @@ class Banco:
         except:
             self.rollback()
             return "Erro update"
+    
+    # Método exclusivo para carregar funcionários do BD01 para o BD02 utilizando seu ID, e gerando um novo ID aleatório e único
+    def carregarDados(self, id, Nome, RG, CPF, Data_admissao, CEP, endereco, bairro, cidade):
+        self.connect()
+        horaAtual = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+        novoId = self.gerar_id_unico()
+        try:
+            self.execute(f"UPDATE {self.tabela} SET ID = ?, Nome = ?, RG = ?, CPF = ?, Data_admissao = ?, Data_hora_alteracao_do_registro = ?, CEP = ?, endereco = ?, bairro = ?, cidade = ? WHERE ID = ?", (str(novoId), Nome, RG, CPF, Data_admissao, horaAtual, CEP, endereco, bairro, cidade, id))
+            self.persist()
+            self.disconnect()
+            return "Sucesso update"
+        except Exception as e:
+            self.rollback()
+            return f"Erro update {str(e)}"
 
-
+    def gerar_id_unico(self):
+        while True:
+            novo_id = uuid.uuid4()
+            # Verificar se o UUID já existe no banco de dados
+            self.execute(f"SELECT ID FROM {self.tabela} WHERE ID=?", (str(novo_id), ))
+            resultado = self.cur.fetchone()
+            if resultado is None:
+                return novo_id
 
 

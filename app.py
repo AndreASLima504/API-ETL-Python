@@ -2,12 +2,11 @@ from flask import Flask, request, jsonify
 import Conexoes as Cons
 import requests
 
-
 # Diferentes instâncias do script conexões.
 ## Alguns métodos não podem ser acessados por certas instâncias
 # Parâmetros: rota, nome da tabela
-BancoOrigem = Cons.Banco("Banco1", "funcionarios")
-BancoDestino = Cons.Banco("Banco2", "funcionarios_fabrica")
+BancoOrigem = Cons.Banco("Banco1.db", "funcionarios")
+BancoDestino = Cons.Banco("Banco2.db", "funcionarios_fabrica")
 Logs = Cons.Banco("Logs.db", "Logs")
 
 app = Flask(__name__)
@@ -19,7 +18,7 @@ def mostrar_logs():
     _logs = Logs.read()
     return _logs
 
-# Atualizar dados do BD02 com dados do BD01 através do ID, incluindo endereço através do viacep
+# Atualizar dados do BD02 com dados do BD01 através do ID, incluindo endereço através do viacep e gerando ID randômico e único
 @app.route('/atualizar_dados', methods=['PUT'])
 def copy_data():
     dadosOrigem = get_origem()
@@ -36,12 +35,9 @@ def copy_data():
             "bairro": enderecoCompleto['bairro'],
             "cidade": enderecoCompleto['localidade']
         }
-        try:
-            BancoDestino.update(dadosUpdate['ID'], dadosUpdate['Nome'], dadosUpdate['RG'], dadosUpdate['CPF'], dadosUpdate['Data_admissao'], dadosUpdate['CEP'], dadosUpdate['endereco'], dadosUpdate['bairro'], dadosUpdate['cidade'])
-            Logs.novoLog('Dados do BD02 atualizados com os do BD01')
-        except:
-            return "Erro na atualização de dados"
-    return BancoDestino.read()
+        codigo = BancoDestino.carregarDados(dadosUpdate['ID'], dadosUpdate['Nome'], dadosUpdate['RG'], dadosUpdate['CPF'], dadosUpdate['Data_admissao'], dadosUpdate['CEP'], dadosUpdate['endereco'], dadosUpdate['bairro'], dadosUpdate['cidade'])
+        Logs.novoLog('Dados do BD02 atualizados com os do BD01')
+    return codigo
 
 # Ler todos os dados do banco de origem (BD01)
 @app.route('/dados_origem', methods=['GET'])
@@ -95,4 +91,4 @@ def delete_target_data():
 
 
 if __name__ == '__main__':
-        app.run(debug=False)
+        app.run(debug=True)
